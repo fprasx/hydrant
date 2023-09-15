@@ -1,0 +1,35 @@
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: run biome lint
+      run: |
+        npx -y @biomejs/biome ci --linter-enabled=true .
+
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: run biome format
+      run: |
+        npx -y @biomejs/biome ci --formatter-enabled=true .
+
